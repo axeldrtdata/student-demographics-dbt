@@ -1,0 +1,20 @@
+# Copy to ~/.dbt/profiles.yml and fill in your own credentials.
+student_demographics:
+  target: snowflake
+  outputs:
+    snowflake:
+      type: snowflake
+      account: <your_account>
+      user: <your_user>
+      password: <your_password>
+      role: <your_role>
+      warehouse: <your_warehouse>
+      database: PROJET_8
+      schema: ANALYTICS
+      threads: 4
+    # Optional: run the whole pipeline locally on DuckDB (pip install dbt-duckdb),
+    # after loading the raw enrolments into a RAW.students table.
+    local:
+      type: duckdb
+      path: PROJET_8.duckdb
+      threads: 4

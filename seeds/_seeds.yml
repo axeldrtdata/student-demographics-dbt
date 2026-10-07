@@ -1,0 +1,27 @@
+version: 2
+
+seeds:
+  - name: population_region_2024
+    description: >
+      Regional population of France estimated by INSEE on 1 January 2024.
+      Source: https://www.insee.fr/fr/statistiques/8721456
+    columns:
+      - name: region
+        description: Region name. Overseas departments ("DOM") and "Centre-Val-de-Loire" are harmonised in staging.
+        data_tests: [not_null, unique]
+      - name: population
+        description: Total population on 1 January 2024.
+        data_tests: [not_null]
+
+  - name: unemployment_region_2024
+    description: >
+      Regional unemployment rate published by INSEE, average of the four quarters of 2024
+      (computed before loading). Overseas regions are not available for the full year.
+      Source: https://www.insee.fr/fr/statistiques/8376844?sommaire=8376908
+    columns:
+      - name: region
+        description: Region name. Corsica is removed in staging.
+        data_tests: [not_null, unique]
+      - name: unemployment_rate
+        description: Average unemployment rate in 2024, in %.
+        data_tests: [not_null]

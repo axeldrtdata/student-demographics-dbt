@@ -1,0 +1,16 @@
+name: student_demographics
+version: '1.0.0'
+profile: student_demographics
+
+model-paths: ["models"]
+seed-paths: ["seeds"]
+macro-paths: ["macros"]
+
+models:
+  student_demographics:
+    staging:
+      +materialized: view
+    intermediate:
+      +materialized: view
+    marts:
+      +materialized: table

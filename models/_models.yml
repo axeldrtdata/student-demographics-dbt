@@ -1,0 +1,137 @@
+version: 2
+
+models:
+  - name: stg_students
+    description: Staged enrolments, one row per enrolment, identifiers pseudonymised with SHA-256.
+    columns:
+      - name: user_id_hash
+        description: Pseudonymised student identifier (SHA-256). A student can appear in several years.
+        data_tests: [not_null]
+      - name: primary_key
+        description: Pseudonymised key of the enrolment (student + start year).
+        data_tests: [unique, not_null]
+      - name: category
+        description: Path category. The scope is restricted to the Data path.
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ["Data"]
+      - name: age_group
+        description: Age group at enrolment, 9 groups.
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ["20-24 ans", "25-29 ans", "30-34 ans", "35-39 ans", "40-44 ans", "45-49 ans", "50-54 ans", "55-59 ans", "60 ans ou plus"]
+      - name: gender
+        description: Declared gender. Missing values are kept as 'unknown' to track the non-response rate.
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ["F", "M", "unknown"]
+      - name: region
+        description: Region of residence, overseas regions grouped as DROM.
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_population_region_2024')
+                field: region
+      - name: year_started
+        description: Start year of the path.
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: [2022, 2023, 2024, 2025]
+                quote: false
+
+  - name: stg_population_region_2024
+    description: INSEE regional population (2024), labels harmonised with the enrolment data, Corsica excluded.
+    columns:
+      - name: region
+        data_tests: [not_null, unique]
+      - name: population
+        data_tests: [not_null]
+      - name: population_share
+        description: Region's share of the national population, in % (sums to 100%).
+        data_tests: [not_null]
+
+  - name: stg_unemployment_region_2024
+    description: INSEE regional unemployment rate, 2024 average, Corsica excluded.
+    columns:
+      - name: region
+        data_tests: [not_null, unique]
+      - name: unemployment_rate
+        data_tests: [not_null]
+
+  - name: int_courses_per_student
+    description: Student grain. Number of paths followed by each student.
+    columns:
+      - name: user_id_hash
+        data_tests: [not_null, unique]
+      - name: number_of_courses
+        data_tests: [not_null]
+
+  - name: mart_age_share_by_year
+    description: Enrolments and share of each age group per year (each year sums to 100%).
+    columns:
+      - name: year_started
+        data_tests: [not_null]
+      - name: age_group
+        data_tests: [not_null]
+      - name: share_per_year
+        data_tests: [not_null]
+
+  - name: mart_gender_share_by_year
+    description: Enrolments and share of each gender per year, 'unknown' included (each year sums to 100%).
+    columns:
+      - name: year_started
+        data_tests: [not_null]
+      - name: gender
+        data_tests: [not_null]
+      - name: share_per_year
+        data_tests: [not_null]
+
+  - name: mart_region_share_by_year
+    description: Enrolments and share of each region per year (each year sums to 100%).
+    columns:
+      - name: year_started
+        data_tests: [not_null]
+      - name: region
+        data_tests: [not_null]
+      - name: share_per_year
+        data_tests: [not_null]
+
+  - name: mart_courses_per_student
+    description: Number of students by number of paths followed.
+    columns:
+      - name: number_of_courses
+        data_tests: [not_null, unique]
+      - name: students
+        data_tests: [not_null]
+
+  - name: mart_region_vs_population
+    description: Student share vs population share by region and year, with a representation ratio.
+    columns:
+      - name: region
+        data_tests: [not_null]
+      - name: representation_ratio
+        description: student_share / population_share. Above 1, the region is over-represented.
+        data_tests: [not_null]
+
+  - name: mart_region_vs_unemployment
+    description: Student share vs unemployment rate by region and year. Empty unemployment rate for DROM (not published for the full year).
+    columns:
+      - name: region
+        data_tests: [not_null]
+
+  - name: mart_students_consolidated
+    description: Final consolidated dataset, one row per enrolment, pseudonymised and enriched with INSEE data.
+    columns:
+      - name: primary_key
+        data_tests: [unique, not_null]
+      - name: population_2024
+        data_tests: [not_null]

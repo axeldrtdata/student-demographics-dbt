@@ -1,0 +1,25 @@
+version: 2
+
+sources:
+  - name: openclassrooms
+    description: Enrolment data loaded into Snowflake from the CSV export provided by the team.
+    database: PROJET_8
+    schema: RAW
+    tables:
+      - name: students
+        description: >
+          Raw export of enrolments: 4,647 rows, one row per enrolment.
+          A student can appear in several years. Not published in this repository (personal data).
+        columns:
+          - name: user_id
+            description: Technical student identifier. Pseudonymised in staging and never exposed downstream.
+          - name: path_category_name
+            description: Category of the path followed (Data only).
+          - name: age_group
+            description: Age group at the start of the path, 9 groups.
+          - name: gender
+            description: Declared gender. Missing when the student did not answer.
+          - name: region
+            description: Declared region of residence.
+          - name: year_path_started
+            description: Year the path started, 2022 to 2025.
