@@ -16,7 +16,7 @@ seeds:
   - name: unemployment_region_2024
     description: >
       Regional unemployment rate published by INSEE, average of the four quarters of 2024
-      (computed before loading). Overseas regions are not available for the full year.
+      (computed before loading). Overseas regions are excluded by choice: INSEE does not publish a rate for Mayotte, so the group is not compared partially.
       Source: https://www.insee.fr/fr/statistiques/8376844?sommaire=8376908
     columns:
       - name: region
