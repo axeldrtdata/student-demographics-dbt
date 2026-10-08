@@ -31,7 +31,7 @@ OpenClassrooms wanted to understand how the profile of the students enrolling in
 | Under-35s | 43% of enrolments in 2022, 53% in 2025 |
 | Women (among students who gave their gender) | about 30% every year, 18% among 20–24-year-olds |
 | Gender not given | 42% in 2022, 7% in 2025 |
-| Île-de-France | 45% of students for 18% of the population (ratio 2.47) |
+| Île-de-France | 46% of students for 18% of the population (ratio 2.49) |
 | Re-enrolment | 14% of students follow more than one path |
 
 ## Repository structure
@@ -70,8 +70,8 @@ dbt build
 - The causes of the decline in enrolments are not in the data.
 - The completeness of 2025 remains to be confirmed.
 - Several regions have small numbers, so regional gaps are not interpretable one by one.
-- INSEE does not publish a full-year unemployment rate for the overseas regions.
-- One INSEE year (2024) is used for the whole period; regional population shares move by less than 0.1 point between 2022 and 2025.
+- The overseas regions are excluded from the unemployment comparison: INSEE publishes a rate for four of them but not for Mayotte, so the group is left out rather than compared partially.
+- One INSEE year (2024) is used for the whole period; regional population shares move by less than 0.15 point between 2022 and 2025.
 
 ## Stack
 
