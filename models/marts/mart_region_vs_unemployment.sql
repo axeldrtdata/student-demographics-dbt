@@ -1,5 +1,5 @@
 -- Compares each region's share of students with its unemployment rate.
--- Overseas regions have no unemployment rate for the full year and stay empty.
+-- Overseas regions are excluded from the unemployment reference by choice and stay empty.
 select
     s.year_started,
     s.region,
