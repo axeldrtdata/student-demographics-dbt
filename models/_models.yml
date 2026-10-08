@@ -123,7 +123,7 @@ models:
         data_tests: [not_null]
 
   - name: mart_region_vs_unemployment
-    description: Student share vs unemployment rate by region and year. Empty unemployment rate for DROM (not published for the full year).
+    description: Student share vs unemployment rate by region and year. Empty unemployment rate for DROM, excluded by choice from the unemployment reference (no rate for Mayotte).
     columns:
       - name: region
         data_tests: [not_null]
